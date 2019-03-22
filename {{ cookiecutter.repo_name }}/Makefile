@@ -41,7 +41,7 @@ create_environment:
 
 ## Test python environment is setup correctly
 test_environment:
-	python test_environment.py
+	py.test tests/test_python_version.py
 
 #################################################################################
 # PROJECT RULES                                                                 #
