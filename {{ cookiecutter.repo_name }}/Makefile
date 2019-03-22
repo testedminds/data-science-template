@@ -1,4 +1,6 @@
-.PHONY: clean data lint requirements
+SHELL := /usr/bin/env bash
+
+.PHONY: clean data-import data-process src-lint src-test requirements
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -8,45 +10,54 @@ PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 PROJECT_NAME = {{ cookiecutter.repo_name }}
 
+
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
 ## Install Python Dependencies
-requirements: test_environment
+requirements: env-test
 	python -m pip install -U pip setuptools wheel
 	python -m pip install -r requirements.txt
-
-## Make Dataset
-data: requirements
-	python src/data/make_dataset.py
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Lint using flake8
-lint:
-	flake8 src
-
 ## Set up python interpreter environment
-create_environment:
+env-create:
 	python -m pip install -q virtualenv virtualenvwrapper
 	@echo ">>> Installing virtualenvwrapper if not already intalled.\nMake sure the following lines are in shell startup file\n\
 	export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource /usr/local/bin/virtualenvwrapper.sh\n"
 	@bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME)"
 	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
 
-
 ## Test python environment is setup correctly
-test_environment:
+env-test:
 	py.test tests/test_python_version.py
 
+
 #################################################################################
-# PROJECT RULES                                                                 #
+# Dataset Rules                                                                 #
 #################################################################################
 
+data-import:
+	echo Import the data from the original source
+
+data-process:
+	python src/data/raw_to_processed.py
+
+
+#################################################################################
+# Code Rules                                                                    #
+#################################################################################
+
+src-test:
+	py.test
+
+src-lint:
+	flake8 src
 
 
 #################################################################################
