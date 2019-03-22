@@ -4,10 +4,14 @@
 _A logical, reasonably standardized, but flexible project structure for doing and sharing data science work._
 
 
-This is a customized [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/readme.html) version of the [cookiecutter-data-science](http://drivendata.github.io/cookiecutter-data-science/) project from [DrivenData](https://www.drivendata.org/).
+This is a customized version of the [cookiecutter-data-science](http://drivendata.github.io/cookiecutter-data-science/) project from [DrivenData](https://www.drivendata.org/).
 
 
-#### [Documentation](http://drivendata.github.io/cookiecutter-data-science/)
+#### Documentation
+
+[cookiecutter-data-science](http://drivendata.github.io/cookiecutter-data-science/)
+
+[cookiecutter CLI](https://cookiecutter.readthedocs.io/en/latest/readme.html)
 
 
 ### Requirements to use the cookiecutter template:
