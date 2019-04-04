@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-.PHONY: clean data-import data-process src-lint src-test requirements
+.PHONY: clean data-import data-process env-create env-test src-lint src-test requirements
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -16,7 +16,7 @@ PROJECT_NAME = {{ cookiecutter.repo_name }}
 #################################################################################
 
 ## Install Python Dependencies
-requirements: env-test
+requirements:
 	python -m pip install -U pip setuptools wheel
 	python -m pip install -r requirements.txt
 
@@ -27,11 +27,11 @@ clean:
 
 ## Set up python interpreter environment
 env-create:
-	python -m pip install -q virtualenv virtualenvwrapper
-	@echo ">>> Installing virtualenvwrapper if not already intalled.\nMake sure the following lines are in shell startup file\n\
+	python -m pip install -q autoenv virtualenv virtualenvwrapper
+	@printf ">>> Installing virtualenvwrapper if not already intalled.\nMake sure the following lines are in shell startup file\n\
 	export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource /usr/local/bin/virtualenvwrapper.sh\n"
 	@bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME)"
-	@echo ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)"
+	@printf ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)\n"
 
 ## Test python environment is setup correctly
 env-test:
