@@ -18,4 +18,5 @@ pandas
 sand
 scikit-learn
 seaborn
+statsmodels
 toolz
