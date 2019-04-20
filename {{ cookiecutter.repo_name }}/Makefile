@@ -31,6 +31,7 @@ env-create:
 	@printf ">>> Installing virtualenvwrapper if not already intalled.\nMake sure the following lines are in shell startup file\n\
 	export WORKON_HOME=$$HOME/.virtualenvs\nexport PROJECT_HOME=$$HOME/Devel\nsource /usr/local/bin/virtualenvwrapper.sh\n"
 	@bash -c "source `which virtualenvwrapper.sh`;mkvirtualenv $(PROJECT_NAME)"
+	@mv dotenv .env
 	@printf ">>> New virtualenv created. Activate with:\nworkon $(PROJECT_NAME)\n"
 
 ## Test python environment is setup correctly
@@ -42,9 +43,11 @@ env-test:
 # Dataset Rules                                                                 #
 #################################################################################
 
+## Import data from the original source to data/raw
 data-import:
 	echo Import the data from the original source
 
+## data/raw to data/processed
 data-process:
 	python src/data/raw_to_processed.py
 
@@ -53,9 +56,11 @@ data-process:
 # Code Rules                                                                    #
 #################################################################################
 
+## run tests
 src-test:
 	py.test
 
+## flake8
 src-lint:
 	flake8 src
 
